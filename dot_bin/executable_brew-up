@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# update homebrew and all dependencies, check health status
+
+brew update
+brew upgrade
+
+brew cleanup -s
+rm -rf "$(brew --cache)"
+
+brew doctor
