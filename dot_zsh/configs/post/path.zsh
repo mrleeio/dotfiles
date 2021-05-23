@@ -14,8 +14,8 @@ eval "$(fnm env)"
 # direnv
 eval "$(direnv hook zsh)"
 
-# postgresql@10
-export PATH="/usr/local/opt/postgresql@10/bin:$PATH"
+# gpg
+export GPG_TTY=$(tty)
 
 # mkdir .git/safe in the root of repositories you trust
 PATH=".git/safe/../../bin:$PATH"
