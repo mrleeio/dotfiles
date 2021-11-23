@@ -1,0 +1,62 @@
+# Global brew bundle file
+#
+# Run `brew bundle --global` to install listed libraries and casks
+
+# Taps
+
+tap "homebrew/cask"
+tap "homebrew/services"
+tap "AlexanderWillner/tap"
+
+# Databases
+
+brew "postgresql", restart_service: true
+brew "redis", restart_service: true
+
+# Shell & Editors
+
+brew "vim"
+brew "zsh"
+
+# Programming langause version management
+
+brew "fnm"
+brew "chruby"
+brew "ruby-install"
+
+# CLIs
+
+brew "awscli"
+brew "gh"
+brew "mas"
+
+# Elixir
+
+brew "elixir"
+brew "erlang"
+
+# Package managers
+
+brew "fnm"
+brew "chruby"
+brew "ruby-install"
+brew "yarn"
+
+# Utilities
+
+brew "the_silver_searcher"
+brew "fzf"
+
+# Casks
+
+cask_args appdir: "/Applications", require_sha: true
+
+cask "gpg-suite-no-mail"
+
+# Apple Store
+
+# mas "1Password", id: 443987910 # Using version 8 beta
+# mas "Magnet", id: 441258766
+# mas "Slack for Desktop", id: 803453959
+# mas "Things", id: 904280696
+# mas "Xcode", id: 497799835

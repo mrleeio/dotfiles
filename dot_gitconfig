@@ -20,17 +20,20 @@
   ff = only
 [commit]
   template = ~/.gitmessage
+  gpgsign = true
 [fetch]
   prune = true
 [rebase]
   autosquash = true
-[include]
-  path = ~/.gitconfig.local
 [diff]
   colorMoved = zebra
 [pull]
   ff = only
+[gpg]
+  program = /usr/local/bin/gpg
+[credential]
+  helper = osxkeychain
 [user]
   name = "Michael Lee"
   email = "michael@mrlee.io"
-  signingkey = 9AFFC8E56100BB8C
+  signingkey = D4F24846E7B81EE0

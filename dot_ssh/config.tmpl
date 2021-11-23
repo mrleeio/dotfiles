@@ -1,0 +1,13 @@
+{{ if eq .chezmoi.hostname "michael-C02F404XMD6R" -}}
+Include conf.d/*
+
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+{{ else -}}
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+{{ end -}}

@@ -1,0 +1,9 @@
+{{- $email := promptString "email" -}}
+
+encryption = "gpg"
+
+[data]
+    email = {{ $email | quote }}
+
+[gpg]
+  recipient = {{ $email | quote }}

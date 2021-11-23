@@ -1,0 +1,57 @@
+" ALE configuration
+
+augroup ale
+  autocmd!
+
+  if g:has_async
+    autocmd VimEnter *
+      \ set updatetime=1000 |
+      \ let g:ale_lint_on_text_changed = 0
+    autocmd CursorHold * call ale#Queue(0)
+    autocmd CursorHoldI * call ale#Queue(0)
+    autocmd InsertEnter * call ale#Queue(0)
+    autocmd InsertLeave * call ale#Queue(0)
+  else
+    echoerr "Requires NeoVim or Vim 8"
+  endif
+augroup END
+
+let g:ale_linters = {}
+let g:ale_linters.scss = ['stylelint']
+let g:ale_linters.css = ['stylelint']
+let g:ale_linters.elixir = ['elixir-ls']
+let g:ale_linters.ruby = ['rubocop', 'ruby']
+
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_fixers.elixir = ['mix_format']
+let g:ale_fixers.ruby = ['rubocop']
+let g:ale_ruby_rubocop_executable = 'bundle'
+let g:ale_fixers.javascript = ['eslint', 'prettier']
+let g:ale_fixers.html = ['prettier']
+let g:ale_fixers.scss = ['stylelint']
+let g:ale_fixers.css = ['stylelint']
+
+let g:ale_sign_column_always = 1
+let g:ale_elixir_credo_strict = 1
+
+" Setup instructions for Elixir LS
+"
+" To configure the below path you must download and compile the latest release
+" of Elixir LS.  Follow the below commands:
+"
+"   git clone git@github.com:elixir-lsp/elixir-ls.git
+"   cd elixir-ls && mkdir rel
+"   git checkout tags/{release tag}}
+"   mix deps.get && mix compile
+"   mix elixir_ls.release -o rel
+
+let g:ale_elixir_elixir_ls_release = expand("/Users/michael/GitHub/elixir-lsp/elixir-ls/rel")
+
+" Shortcuts
+nnoremap dt :ALEGoToDefinition<cr>
+nnoremap df :ALEFix<cr>
+nnoremap K :ALEHover<cr>
+
+" Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
