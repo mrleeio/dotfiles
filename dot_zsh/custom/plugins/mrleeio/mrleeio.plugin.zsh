@@ -17,6 +17,10 @@ function g() {
 
 eval "$(fnm env)"
 
+# Configure Go path
+
+export PATH=$PATH:$(go env GOPATH)/bin
+
 # Custom aliases
 
 alias dev="cd $HOME/GitHub"
