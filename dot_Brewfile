@@ -45,9 +45,3 @@ brew "yarn"
 
 brew "the_silver_searcher"
 brew "fzf"
-
-# Casks
-
-cask_args appdir: "/Applications", require_sha: true
-
-cask "gpg-suite-no-mail"
