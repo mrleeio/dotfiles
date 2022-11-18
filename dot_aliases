@@ -1,0 +1,28 @@
+# Unix
+alias ll="ls -al"
+alias ln="ln -v"
+alias mkdir="mkdir -p"
+alias e="$EDITOR"
+alias v="$VISUAL"
+
+# Bundler
+alias b="bundle"
+
+# Ruby/Rails
+alias migrate="bin/rails db:migrate db:rollback && bin/rails db:migrate db:test:prepare"
+alias s="rspec"
+alias be="bundle exec"
+alias ber="bundle exec rubocop"
+
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
+
+# Project navigation
+alias dev="cd $HOME/GitHub"
+alias mdev="cd $HOME/GitHub/mrleeio"
+
+# Vim
+alias vimup="vim -u $HOME/.vimrc.bundles +PlugUpdate +PlugClean! +qa"
+
+# Chezmoi
+alias ch="chezmoi"
