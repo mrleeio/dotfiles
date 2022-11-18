@@ -28,7 +28,6 @@ brew "ruby-install"
 
 brew "awscli"
 brew "gh"
-brew "mas"
 
 # Elixir
 
@@ -52,11 +51,3 @@ brew "fzf"
 cask_args appdir: "/Applications", require_sha: true
 
 cask "gpg-suite-no-mail"
-
-# Apple Store
-
-# mas "1Password", id: 443987910 # Using version 8 beta
-# mas "Magnet", id: 441258766
-# mas "Slack for Desktop", id: 803453959
-# mas "Things", id: 904280696
-# mas "Xcode", id: 497799835
