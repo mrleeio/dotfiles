@@ -23,7 +23,6 @@ else
 endif
 
 Plug 'christoomey/vim-run-interactive'
-Plug 'dracula/vim', {'name': 'dracula'}
 Plug 'elixir-lang/vim-elixir'
 Plug 'junegunn/fzf.vim'
 Plug 'pangloss/vim-javascript'
