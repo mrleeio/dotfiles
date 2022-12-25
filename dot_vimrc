@@ -155,6 +155,3 @@ set complete+=kspell
 
 " Always use vertical diffs
 set diffopt+=vertical
-
-" Set colorscheme
-colorscheme dracula
