@@ -34,13 +34,6 @@ brew "gh"
 brew "elixir"
 brew "erlang"
 
-# Package managers
-
-brew "fnm"
-brew "chruby"
-brew "ruby-install"
-brew "yarn"
-
 # Utilities
 
 brew "the_silver_searcher"
