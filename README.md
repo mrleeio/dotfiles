@@ -31,7 +31,7 @@ These dotfiles are meant to be used and manged with [chezmoi](https://www.chezmo
 Initialize and apply dotfiles with `chezmoi`:
 
 ```
-chezmoi init --apply git@github.com:mrleeio/dotfiles.git
+chezmoi init --apply https://github.com/mrleeio/dotfiles.git
 ```
 
 Pull and apply the latest changes from your repo with:
