@@ -1,26 +1,24 @@
-# dotfiles - Warp Edition
+# dotfiles
 
 Dotfiles are plain text configuration files on Unix-y systems for things like our shell, ~/.zshrc, our editor in ~/.vimrc, and many others. They are called "dotfiles" as they typically are named with a leading . making them hidden files on your system, although this is not a strict requirement.
 
 Since these files are all plain text, we can gather them together in a git repository and use that to track the changes you make over time.
 
-Many of the dotfiles import `*.local` versions of themselves to encourage customization.
-
-A **opinionated setup** script exists to get yourself work ready without much thought.  Comes with a limited warranty from _Michael Lee_.
-
 ## Prerequisites
 
 1. Perform all system updates
 
-2. [Generate an ssh key for github](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/) and [create a personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/).
+2. Install homebrew
 
-3. Run the [lendesk laptop setup script](https://github.com/BetterOfficeApps/laptop).
+3. Install chezmoi
+
+4. Install 1Password and enable SSH
 
 ## Requirements
 
 Operating System support:
 
-* macOS BigSur 11.x
+* macOS Sequoia 15.x
 
 Older versions may work but aren't regularly tested.
 
