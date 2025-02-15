@@ -4,7 +4,6 @@
 
 # Taps
 
-tap "homebrew/cask"
 tap "homebrew/services"
 tap "AlexanderWillner/tap"
 
