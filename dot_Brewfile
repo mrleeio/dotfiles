@@ -10,7 +10,7 @@ tap "AlexanderWillner/tap"
 
 # Databases
 
-brew "postgresql@14", restart_service: true
+brew "postgresql@17", restart_service: true
 brew "redis", restart_service: true
 
 # Shell & Editors
