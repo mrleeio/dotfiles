@@ -1,0 +1,29 @@
+#!/bin/bash
+# Update or install Vim plugins using vim-plug
+
+set -e
+
+echo "Updating Vim plugins..."
+
+# Check if vim is installed
+if ! command -v vim &> /dev/null; then
+    echo "ERROR: vim is not installed"
+    echo "Install with: brew install vim"
+    exit 1
+fi
+
+# Install/update vim-plug if not present
+if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
+    echo "Installing vim-plug..."
+    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
+# Install/update plugins (using only bundles config for speed)
+echo "Installing and updating plugins..."
+vim -u "$HOME/.vimrc.bundles" +PlugUpdate +PlugClean! +qa
+
+echo ""
+echo "✓ Vim plugins updated successfully!"
+echo ""
+echo "Plugins are defined in ~/.vimrc.bundles"

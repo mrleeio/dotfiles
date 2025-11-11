@@ -1,0 +1,27 @@
+# Run daily updates (brew and vim) once per day on first shell startup
+daily-update() {
+  local timestamp_file="$HOME/.cache/last-daily-update"
+  local now=$(date +%s)
+  local last_update=0
+
+  # Create cache directory if it doesn't exist
+  mkdir -p "$(dirname "$timestamp_file")"
+
+  # Read last update timestamp if file exists
+  if [[ -f "$timestamp_file" ]]; then
+    last_update=$(cat "$timestamp_file")
+  fi
+
+  # Calculate seconds in a day (86400 = 24 * 60 * 60)
+  local seconds_per_day=86400
+  local time_since_update=$((now - last_update))
+
+  # If more than 24 hours have passed, run updates
+  if [[ $time_since_update -ge $seconds_per_day ]]; then
+    echo "Running daily updates (brew and vim)..."
+    brew-up
+    vim-up
+    echo "$now" > "$timestamp_file"
+    echo "Daily updates complete!"
+  fi
+}

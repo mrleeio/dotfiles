@@ -1,0 +1,29 @@
+packages:
+  darwin:
+    brews:
+      - age                        # https://age-encryption.org/
+      - awscli                     # https://aws.amazon.com/cli/
+      - curl                       # https://curl.se/
+      - fzf                        # https://github.com/junegunn/fzf
+      - gh                         # https://cli.github.com/
+      - git                        # https://git-scm.com/
+      - gnupg                      # https://gnupg.org/
+      - go                         # https://go.dev/
+      - libyaml                    # https://github.com/yaml/libyaml
+      - mise                       # https://mise.jdx.dev/
+      - node                       # https://nodejs.org/
+      - openssh                    # https://www.openssh.com/
+      - ruby                       # https://www.ruby-lang.org/
+      - starship                   # https://starship.rs/
+      - uv                         # https://github.com/astral-sh/uv
+      - vim                        # https://www.vim.org/
+      - wget                       # https://www.gnu.org/software/wget/
+      - zsh                        # https://www.zsh.org/
+    casks:
+      - 1password                  # https://1password.com/
+      - claude                     # https://claude.ai/download
+      - claude-code                # https://claude.com/claude-code
+      - font-fira-code-nerd-font   # https://github.com/ryanoasis/nerd-fonts
+      - monitorcontrol             # https://github.com/MonitorControl/MonitorControl
+      - rectangle                  # https://rectangleapp.com/
+      - visual-studio-code         # https://code.visualstudio.com/

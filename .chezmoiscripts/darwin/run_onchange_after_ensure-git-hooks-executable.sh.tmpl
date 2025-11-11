@@ -1,0 +1,29 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "darwin" -}}
+{{ template "shell-header.sh" . }}
+
+# Ensure git template hooks are executable
+# Hash: {{ include "dot_git_template/hooks/executable_commit-msg" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_ctags" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_post-checkout" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_post-commit" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_post-merge" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_post-rewrite" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_pre-commit" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_pre-push" | sha256sum }}
+# Hash: {{ include "dot_git_template/hooks/executable_prepare-commit-msg" | sha256sum }}
+
+echo "Ensuring git template hooks are executable..."
+
+HOOK_DIR="$HOME/.git_template/hooks"
+
+if [ -d "$HOOK_DIR" ]; then
+  # Make all hook files executable
+  find "$HOOK_DIR" -type f -exec chmod +x {} \;
+  echo "✓ Git hooks are now executable"
+else
+  echo "⚠ Git template hooks directory not found at $HOOK_DIR"
+  exit 0
+fi
+
+{{ end -}}

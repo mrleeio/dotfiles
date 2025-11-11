@@ -1,0 +1,34 @@
+#!/bin/bash
+# Install Vim plugins automatically on first setup
+
+set -e
+
+echo "===================================="
+echo "Installing Vim plugins..."
+echo "===================================="
+
+# Check if vim is installed
+if ! command -v vim &> /dev/null; then
+    echo "⚠️  vim is not installed yet, skipping plugin installation"
+    echo "    Run 'vim-up' after vim is installed"
+    exit 0
+fi
+
+# Check if vim-plug is already installed
+if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
+    echo "Installing vim-plug..."
+    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo "✓ vim-plug installed"
+fi
+
+# Install plugins silently (using only bundles config for speed)
+echo "Installing Vim plugins (this may take a minute)..."
+vim -u "$HOME/.vimrc.bundles" +PlugInstall +qa 2>/dev/null || {
+    echo "⚠️  Plugin installation encountered an issue"
+    echo "    You can manually run: vim-up"
+    exit 0
+}
+
+echo "✓ Vim plugins installed successfully!"
+echo ""

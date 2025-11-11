@@ -1,0 +1,42 @@
+#!/bin/bash
+# Update Homebrew, upgrade all packages, and run health checks
+
+set -e
+
+echo "===================================="
+echo "Homebrew Update & Maintenance"
+echo "===================================="
+echo ""
+
+# Check if Homebrew is installed
+if ! command -v brew &> /dev/null; then
+    echo "ERROR: Homebrew is not installed"
+    echo "Install from: https://brew.sh"
+    exit 1
+fi
+
+# Update Homebrew
+echo "📦 Updating Homebrew..."
+brew update
+
+echo ""
+echo "⬆️  Upgrading installed packages..."
+brew upgrade
+
+echo ""
+echo "🧹 Cleaning up old versions..."
+brew cleanup
+
+echo ""
+echo "🏥 Running health check..."
+brew doctor || {
+    echo ""
+    echo "⚠️  Some issues were found by brew doctor"
+    echo "    Review the warnings above"
+}
+
+echo ""
+echo "✓ Homebrew maintenance complete!"
+echo ""
+echo "Summary:"
+brew list --versions | wc -l | xargs -I {} echo "  {} packages installed"

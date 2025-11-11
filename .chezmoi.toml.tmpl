@@ -1,0 +1,25 @@
+{{- $email := "michael@mrlee.io" -}}
+{{- $name := "Michael Lee" -}}
+
+encryption = "age"
+
+[age]
+    identity = "~/.config/chezmoi/key.txt"
+    recipient = "age1dh556xg2e3jq3pep7asr5fz9aq5ngjshmx0j94857ns5vaa7du5q5xhfl2"
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJdrdW0zdUlkpI8Pm4VchYvdxuvKwQRfjcnYpQhm8u1"
+
+[diff]
+    pager = "less -R"
+
+[merge]
+    command = "vimdiff"
+
+[edit]
+    command = "vim"
+
+[cd]
+    command = "zsh"
