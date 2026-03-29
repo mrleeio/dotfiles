@@ -1,0 +1,29 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "darwin" -}}
+{{ template "shell-header.sh" . }}
+
+INSTALL_DIR="$HOME/.claude/theme-sync"
+
+if [ -f "$INSTALL_DIR/claude-theme-sync" ]; then
+  echo "claude-theme-sync is already installed"
+  exit 0
+fi
+
+if ! xcode-select -p &>/dev/null; then
+  echo "Xcode Command Line Tools required for claude-theme-sync."
+  echo "Install with: xcode-select --install"
+  exit 0
+fi
+
+echo "Installing claude-theme-sync..."
+
+TMPDIR_CLONE="$(mktemp -d)"
+trap 'rm -rf "$TMPDIR_CLONE"' EXIT
+
+git clone --depth 1 https://github.com/alfredomtx/claude-theme-sync.git "$TMPDIR_CLONE/claude-theme-sync"
+cd "$TMPDIR_CLONE/claude-theme-sync"
+bash install.sh
+
+echo "claude-theme-sync installed successfully"
+
+{{ end -}}

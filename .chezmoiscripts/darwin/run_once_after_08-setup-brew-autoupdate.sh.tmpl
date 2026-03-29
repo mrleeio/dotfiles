@@ -1,0 +1,6 @@
+#!/bin/bash
+{{ template "shell-header.sh" . }}
+
+brew tap homebrew/autoupdate
+brew autoupdate delete 2>/dev/null || true
+brew autoupdate start 21600 --upgrade --cleanup --immediate

@@ -1,0 +1,50 @@
+# === Zinit Bootstrap ===
+ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
+if [[ ! -d "$ZINIT_HOME" ]]; then
+  mkdir -p "$(dirname "$ZINIT_HOME")"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+source "${ZINIT_HOME}/zinit.zsh"
+
+# === Prompt (eager -- must be instant) ===
+eval "$(starship init zsh)"
+
+# === Zinit Plugins (turbo mode -- deferred) ===
+zinit wait lucid light-mode for \
+  atinit"zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+  atload"_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions \
+  blockf atpull'zinit creinstall -q .' \
+    zsh-users/zsh-completions
+
+# === OMZ Plugins (aliases & completions) ===
+zinit wait lucid for \
+  OMZP::gh \
+  OMZP::brew
+
+# === Atuin (shell history, binary via Homebrew) ===
+zinit ice atinit"eval \"\$(atuin init zsh)\""
+zinit light atuinsh/atuin
+
+# === Tool Initialization ===
+eval "$(mise activate zsh)"
+eval "$(zoxide init zsh)"
+
+# === History ===
+HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+
+# === Custom Functions ===
+fpath=("${ZDOTDIR:-$HOME}/.zsh/functions" $fpath)
+autoload -Uz ${fpath[1]}/*(.:t)
+
+# === Options ===
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP

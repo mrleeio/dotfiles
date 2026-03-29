@@ -1,0 +1,87 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "darwin" -}}
+{{ template "shell-header.sh" . }}
+
+THEME_DIR="$HOME/.config/terminal"
+
+if [ ! -d "$THEME_DIR" ]; then
+  echo "Terminal theme directory not found, skipping"
+  exit 0
+fi
+
+echo "Configuring Terminal.app with Catppuccin themes..."
+
+# Import .terminal profiles directly into Terminal's plist and set font using Swift.
+# This avoids `open` which imports asynchronously and races with subsequent commands.
+THEME_DIR="$THEME_DIR" swift - <<'SWIFT'
+import Cocoa
+
+let themeDir = ProcessInfo.processInfo.environment["THEME_DIR"]!
+let fontName = "JetBrainsMono Nerd Font"
+let fontSize: CGFloat = 13
+
+// Generate font data
+var fontData: Data? = nil
+if let font = NSFont(name: fontName, size: fontSize) {
+    fontData = try? NSKeyedArchiver.archivedData(withRootObject: font, requiringSecureCoding: false)
+    print("Font '\(fontName)' found")
+} else {
+    print("Warning: Font '\(fontName)' not installed, profiles will use default font")
+}
+
+guard let terminalDefaults = UserDefaults(suiteName: "com.apple.Terminal") else {
+    print("Error: Could not access Terminal.app preferences")
+    exit(1)
+}
+
+var windowSettings = terminalDefaults.dictionary(forKey: "Window Settings") as? [String: [String: Any]] ?? [:]
+
+// Read each .terminal file and inject into Window Settings
+let fm = FileManager.default
+guard let files = try? fm.contentsOfDirectory(atPath: themeDir) else {
+    print("Error: Could not read theme directory")
+    exit(1)
+}
+
+for file in files where file.hasSuffix(".terminal") {
+    let path = (themeDir as NSString).appendingPathComponent(file)
+    guard let data = fm.contents(atPath: path),
+          let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
+          let profileName = plist["name"] as? String else {
+        print("Warning: Could not parse \(file)")
+        continue
+    }
+
+    var profile = plist
+    if let fd = fontData {
+        profile["Font"] = fd
+    }
+    windowSettings[profileName] = profile
+    print("Imported profile: \(profileName)")
+}
+
+terminalDefaults.set(windowSettings, forKey: "Window Settings")
+terminalDefaults.set("catppuccin-mocha", forKey: "Default Window Settings")
+terminalDefaults.set("catppuccin-mocha", forKey: "Startup Window Settings")
+terminalDefaults.synchronize()
+
+print("Terminal.app default profile set to catppuccin-mocha")
+SWIFT
+
+# Make the theme switcher script executable
+chmod +x "$THEME_DIR/terminal-theme-switcher.sh"
+
+# Load the theme switcher LaunchAgent
+PLIST="$HOME/Library/LaunchAgents/com.terminal.theme-switcher.plist"
+if [ -f "$PLIST" ]; then
+  launchctl unload "$PLIST" 2>/dev/null || true
+  launchctl load "$PLIST"
+  echo "Terminal theme switcher LaunchAgent loaded"
+fi
+
+# Run the switcher once to match current system appearance
+"$THEME_DIR/terminal-theme-switcher.sh" || true
+
+echo "Terminal.app configured successfully"
+
+{{ end -}}

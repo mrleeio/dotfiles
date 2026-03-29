@@ -1,0 +1,33 @@
+[init]
+  defaultBranch = main
+[push]
+  default = current
+  autoSetupRemote = true
+[pull]
+  ff = only
+[fetch]
+  prune = true
+[merge]
+  ff = only
+[rebase]
+  autosquash = true
+[diff]
+  colorMoved = zebra
+[color]
+  ui = auto
+[core]
+  excludesfile = ~/.gitignore
+  autocrlf = input
+  editor = nvim
+[commit]
+  gpgsign = true
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
+[credential]
+  helper = osxkeychain
+[user]
+  name = "{{ (index .machines .machine_name).name }}"
+  email = "{{ (index .machines .machine_name).email }}"
+  signingkey = {{ (index .machines .machine_name).signingkey }}

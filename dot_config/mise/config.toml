@@ -1,0 +1,6 @@
+[settings]
+node.compile = false
+python.compile = false
+ruby.compile = false
+pin = true
+lockfile = true

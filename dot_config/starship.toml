@@ -1,0 +1,34 @@
+command_timeout = 500
+
+[cmd_duration]
+disabled = true
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = "[$branch]($style) "
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+
+[ruby]
+format = "[$symbol($version)]($style) "
+symbol = "rb "
+
+[golang]
+format = "[$symbol($version)]($style) "
+symbol = "go "
+
+[python]
+format = "[$symbol($version)]($style) "
+symbol = "py "
+
+[nodejs]
+format = "[$symbol($version)]($style) "
+symbol = "js "

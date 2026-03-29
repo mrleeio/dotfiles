@@ -1,0 +1,23 @@
+{{- $machineName := promptStringOnce . "machine_name" "Machine name (e.g., personal, homelab, work)" "personal" -}}
+
+encryption = "age"
+
+[age]
+    identity = "~/.config/chezmoi/key.txt"
+    recipient = "age1dh556xg2e3jq3pep7asr5fz9aq5ngjshmx0j94857ns5vaa7du5q5xhfl2"
+
+[data]
+    machine_name = {{ $machineName | quote }}
+
+[diff]
+    pager = "less -R"
+
+[merge]
+    command = "nvim"
+    args = ["-d"]
+
+[edit]
+    command = "nvim"
+
+[cd]
+    command = "zsh"

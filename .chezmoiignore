@@ -1,0 +1,21 @@
+README.md
+LICENSE
+docs/
+
+{{ if ne .machine_name "homelab" }}
+.config/atuin/server.toml
+Library/LaunchAgents/com.atuin.server.plist
+{{ end }}
+
+{{ if eq .machine_name "work" }}
+.ssh/id_ed25519_personal
+.ssh/id_ed25519_personal.pub
+{{ end }}
+
+{{ if ne .machine_name "work" }}
+.ssl/
+.ssh/id_ed25519_work
+.ssh/id_ed25519_work.pub
+.ssh/id_rsa_work
+.ssh/id_rsa_work.pub
+{{ end }}

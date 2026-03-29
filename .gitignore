@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# chezmoi
+*.bak
+
+# Claude Code
+.claude/plans/
+.claude/todos/
+.claude/debug/
+.claude/settings.local.json

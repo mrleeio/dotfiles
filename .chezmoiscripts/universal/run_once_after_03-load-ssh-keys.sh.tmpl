@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "Loading SSH keys into agent..."
+
+# Load signing/GitHub key
+ssh-add --apple-use-keychain ~/.ssh/{{ (index .machines .machine_name).sshkey }} 2>/dev/null || \
+  ssh-add ~/.ssh/{{ (index .machines .machine_name).sshkey }}
+
+{{ if eq .machine_name "work" -}}
+# Load ADO key
+ssh-add --apple-use-keychain ~/.ssh/id_rsa_work 2>/dev/null || \
+  ssh-add ~/.ssh/id_rsa_work
+{{ end -}}
+
+echo "SSH keys loaded."

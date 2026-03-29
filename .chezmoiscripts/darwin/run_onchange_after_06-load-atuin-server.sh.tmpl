@@ -1,0 +1,14 @@
+#!/bin/bash
+{{ if eq .machine_name "homelab" -}}
+{{ template "shell-header.sh" . }}
+
+PLIST="$HOME/Library/LaunchAgents/com.atuin.server.plist"
+
+# Unload if previously loaded
+launchctl bootout "gui/$(id -u)/com.atuin.server" 2>/dev/null || true
+
+# Load the agent
+launchctl bootstrap "gui/$(id -u)" "$PLIST"
+
+echo "Atuin server LaunchAgent loaded."
+{{ end -}}

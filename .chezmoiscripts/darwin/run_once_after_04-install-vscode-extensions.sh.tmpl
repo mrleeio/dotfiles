@@ -1,0 +1,27 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "darwin" -}}
+{{ template "shell-header.sh" . }}
+
+if ! command -v code &>/dev/null; then
+  echo "VS Code CLI (code) not found, skipping extension install"
+  exit 0
+fi
+
+echo "Installing VS Code extensions..."
+
+code --install-extension catppuccin.catppuccin-vsc
+code --install-extension Catppuccin.catppuccin-vsc-icons
+code --install-extension shopify.ruby-lsp
+code --install-extension marcoroth.herb-lsp
+code --install-extension github.vscode-github-actions
+code --install-extension opentofu.vscode-opentofu
+code --install-extension astro-build.astro-vscode
+code --install-extension anthropic.claude-code
+code --install-extension ms-python.python
+code --install-extension ms-python.vscode-python-envs
+code --install-extension ms-python.debugpy
+code --install-extension redhat.vscode-yaml
+
+echo "VS Code extensions installed successfully"
+
+{{ end -}}

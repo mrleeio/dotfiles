@@ -1,0 +1,33 @@
+packages:
+  darwin:
+    brews:
+      - age                        # https://age-encryption.org/
+      - atuin                      # https://atuin.sh/
+      - curl                       # https://curl.se/
+      - fd                         # https://github.com/sharkdp/fd
+      - gh                         # https://cli.github.com/
+      - git                        # https://git-scm.com/
+      - grep                       # https://www.gnu.org/software/grep/ (GNU grep with -P support)
+      - mise                       # https://mise.jdx.dev/
+      - gopls                      # https://pkg.go.dev/golang.org/x/tools/gopls
+      - lua-language-server        # https://github.com/LuaLS/lua-language-server
+      - neovim                     # https://neovim.io/
+      - openssh                    # https://www.openssh.com/
+      - pyright                    # https://github.com/microsoft/pyright
+      - ripgrep                    # https://github.com/BurntSushi/ripgrep
+      - ruby-lsp                   # https://github.com/Shopify/ruby-lsp
+      - typescript-language-server # https://github.com/typescript-language-server/typescript-language-server
+      - sqlite                     # https://www.sqlite.org/
+      - starship                   # https://starship.rs/
+      - tree-sitter-cli             # https://tree-sitter.github.io/ (required by nvim-treesitter main branch)
+      - wget                       # https://www.gnu.org/software/wget/
+      - zoxide                     # https://github.com/ajeetdsouza/zoxide
+      - zsh                        # https://www.zsh.org/
+    casks:
+      - 1password                  # https://1password.com/
+      - claude                     # https://claude.ai/download (desktop app)
+      - font-jetbrains-mono-nerd-font # https://github.com/ryanoasis/nerd-fonts
+      - ghostty                    # https://ghostty.org/
+      - monitorcontrol             # https://github.com/MonitorControl/MonitorControl
+      - rectangle                  # https://rectangleapp.com/
+      - visual-studio-code         # https://code.visualstudio.com/

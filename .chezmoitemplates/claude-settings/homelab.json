@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "Authored-By: Michael Lee <michael@mrlee.io>",
+    "pr": ""
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "allowUnsandboxedCommands": false,
+    "excludedCommands": [
+      "atuin",
+      "brew",
+      "chezmoi",
+      "docker",
+      "docker-compose",
+      "gh",
+      "git",
+      "mise",
+      "scp",
+      "ssh"
+    ],
+    "filesystem": {
+      "denyRead": [
+        "~/.ssh/id_*",
+        "~/.aws/credentials",
+        "~/.gnupg/**",
+        "~/.config/gh/hosts.yml",
+        "~/.config/atuin/key",
+        "~/.config/chezmoi/key.txt",
+        "~/.docker/config.json",
+        "~/.netrc",
+        "~/.npmrc",
+        "~/.gem/credentials"
+      ],
+      "denyWrite": [
+        "/etc",
+        "/usr/local",
+        "/opt/homebrew",
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.config/chezmoi"
+      ]
+    },
+    "network": {
+      "allowAllUnixSockets": true,
+      "allowLocalBinding": true,
+      "allowedDomains": [
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com",
+        "registry.npmjs.org",
+        "registry.yarnpkg.com",
+        "rubygems.org",
+        "*.rubygems.org",
+        "api.anthropic.com",
+        "api.githubcopilot.com",
+        "raw.githubusercontent.com",
+        "pypi.org",
+        "files.pythonhosted.org",
+        "proxy.golang.org",
+        "sum.golang.org",
+        "formulae.brew.sh",
+        "ghcr.io",
+        "*.ghcr.io",
+        "registry-1.docker.io",
+        "auth.docker.io",
+        "production.cloudflare.docker.com",
+        "mise.jdx.dev",
+        "luarocks.org",
+        "atuin.sh"
+      ]
+    }
+  },
+  "permissions": {
+    "defaultMode": "plan",
+    "allow": [
+      "Read(~/GitHub/**)",
+      "WebFetch"
+    ],
+    "deny": [
+      "Bash(> .env*)",
+      "Bash(cat .env*)",
+      "Bash(cat */.env*)",
+      "Bash(cat secrets/*)",
+      "Bash(curl *)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/*)",
+      "Bash(wget *)",
+      "Read(./secrets/**)",
+      "Read(.env.*)",
+      "Read(.env)",
+      "Read(~/.aws/credentials)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.netrc)",
+      "Read(~/.npmrc)",
+      "Read(~/.gem/credentials)",
+      "Read(~/.config/atuin/key)",
+      "Read(~/.config/chezmoi/key.txt)"
+    ]
+  }
+}

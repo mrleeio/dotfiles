@@ -1,0 +1,11 @@
+{{ if eq .machine_name "personal" -}}
+sync_address = "http://192.168.1.237:8888"
+auto_sync = true
+sync_frequency = "1h"
+{{ else if eq .machine_name "homelab" -}}
+sync_address = "http://127.0.0.1:8888"
+auto_sync = true
+sync_frequency = "1h"
+{{ else -}}
+auto_sync = false
+{{ end -}}

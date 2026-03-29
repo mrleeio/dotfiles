@@ -1,0 +1,16 @@
+machines:
+  personal:
+    name: "Michael Lee"
+    email: "michael@mrlee.io"
+    signingkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICnCsz7Ps+SK52k+3E5lztnj9xtFe4my1VtjEe46WzMm"
+    sshkey: "id_ed25519_personal"
+  homelab:
+    name: "Michael Lee"
+    email: "michael@mrlee.io"
+    signingkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICnCsz7Ps+SK52k+3E5lztnj9xtFe4my1VtjEe46WzMm"
+    sshkey: "id_ed25519_personal"
+  work:
+    name: "Michael Lee"
+    email: "mlee@gen2fund.com"
+    signingkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPnf9P+blNp57mx90R4RlpGOyx3rdJx3idOI3HFcakt7"
+    sshkey: "id_ed25519_work"

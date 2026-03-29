@@ -1,0 +1,25 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config/reference
+
+# --- Font ---
+font-family = JetBrainsMono Nerd Font
+font-size = 13
+
+# --- Theme (auto-switches with macOS system appearance) ---
+# Uses Ghostty's built-in Catppuccin themes (bundled in Ghostty.app).
+# light: and dark: must both be specified together.
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha
+
+# --- Window ---
+window-theme = auto
+window-decoration = auto
+window-padding-x = 12
+window-padding-y = 10
+window-padding-color = extend
+
+# --- Cursor ---
+cursor-style = block
+cursor-style-blink = false
+
+# --- Scrollback (in bytes) ---
+scrollback-limit = 10000000
