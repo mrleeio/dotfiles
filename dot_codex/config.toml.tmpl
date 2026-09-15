@@ -1,0 +1,79 @@
+{{- $claude := include ".chezmoitemplates/claude-settings/common.json" | fromJson -}}
+{{- $filesystem := dict -}}
+{{- range $claude.sandbox.filesystem.denyWrite -}}
+{{- $_ := set $filesystem . "read" -}}
+{{- end -}}
+{{- range $claude.sandbox.filesystem.denyRead -}}
+{{- $_ := set $filesystem . "deny" -}}
+{{- end -}}
+{{- $_ := set $filesystem "~/.codex" "read" -}}
+{{- $_ := set $filesystem "~/.codex/auth.json" "deny" -}}
+# Shared instructions are deployed separately as ~/.codex/AGENTS.md.
+# Permission profiles replace sandbox_mode; do not combine the two systems.
+default_permissions = "development"
+web_search = "live"
+allow_login_shell = false
+approvals_reviewer = "auto_review"
+
+# Review required command/permission exceptions instead of rejecting them outright.
+[approval_policy.granular]
+sandbox_approval = true
+request_permissions = true
+rules = true
+skill_approval = false
+mcp_elicitations = true
+
+[features]
+# Required: network.enabled alone permits unfiltered direct network access.
+network_proxy = true
+
+[shell_environment_policy]
+inherit = "all"
+# Automatic KEY/SECRET/TOKEN exclusions also strip GitHub/AWS authentication.
+# Keep the explicit exclusions below for unrelated credential variables.
+ignore_default_excludes = true
+
+[shell_environment_policy.set]
+{{ range $name, $value := $claude.env -}}
+{{ $name | quote }} = {{ $value | quote }}
+{{ end }}
+
+[shell_environment_policy.filters]
+{{ range $claude.sandbox.credentials.envVars -}}
+{{ .name | quote }} = "exclude"
+{{ end }}
+[permissions.development]
+description = "Workspace edits with protected credentials and filtered network access"
+extends = ":workspace"
+
+# Keep normal filesystem reads; narrow entries below protect credentials and
+# make sensitive paths read-only even if a workspace includes them.
+[permissions.development.filesystem]
+":root" = "read"
+{{ range $path, $access := $filesystem -}}
+{{ $path | quote }} = {{ $access | quote }}
+{{ end }}
+# Make policy protection explicit, including standalone `codex sandbox` runs.
+[permissions.development.filesystem.":workspace_roots"]
+".codex" = "read"
+".agents" = "read"
+".claude/settings.json" = "read"
+".claude/settings.local.json" = "read"
+# Git must create locks, update its index, and write objects and refs.
+".git" = "write"
+".git/config" = "read"
+".git/hooks" = "read"
+
+[permissions.development.network]
+enabled = true
+mode = "full"
+# Unlike Claude's similarly named setting, this opens private-network access.
+allow_local_binding = false
+dangerously_allow_all_unix_sockets = false
+dangerously_allow_non_loopback_proxy = false
+
+# Reuse Claude's development hosts. No global wildcard or local-service access.
+[permissions.development.network.domains]
+{{ range $claude.sandbox.network.allowedDomains -}}
+{{ . | quote }} = "allow"
+{{ end -}}

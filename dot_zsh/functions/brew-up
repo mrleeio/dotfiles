@@ -1,0 +1,9 @@
+# Refresh Homebrew metadata, then upgrade installed formulae and casks.
+emulate -L zsh
+
+if ! (( $+commands[brew] )); then
+  print -u2 -- 'brew-up: Homebrew is not installed or not on PATH.'
+  return 1
+fi
+
+brew update && brew upgrade

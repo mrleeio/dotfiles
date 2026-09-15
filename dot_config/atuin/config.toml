@@ -1,0 +1,12 @@
+# Local history only on every profile.
+auto_sync = false
+update_check = false
+# Prevent manual sync/login from falling back to the public service.
+sync_address = "http://127.0.0.1:1"
+
+# Search only commands recorded in the current directory (Ctrl-R and Up).
+filter_mode = "directory"
+filter_mode_shell_up_key_binding = "directory"
+
+[search]
+filters = ["directory"]

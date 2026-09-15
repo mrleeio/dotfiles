@@ -1,0 +1,9 @@
+# Offer only these two SSH key items, in this order.
+# Private keys remain in 1Password; these values are item titles.
+[[ssh-keys]]
+item = "Michael Lee SSH Key"
+vault = "Development"
+
+[[ssh-keys]]
+item = "Crafted Compliance SSH Key"
+vault = "Development"

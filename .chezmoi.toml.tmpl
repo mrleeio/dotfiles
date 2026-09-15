@@ -1,0 +1,21 @@
+{{- $machineName := promptStringOnce . "machine_name" "Machine name (e.g., personal, homelab, work)" "personal" -}}
+
+{{- if not (has $machineName (list "personal" "homelab" "work")) -}}
+{{- fail "machine_name must be personal, homelab, or work" -}}
+{{- end -}}
+
+[data]
+    machine_name = {{ $machineName | quote }}
+
+[diff]
+    pager = "less -R"
+
+[merge]
+    command = "nvim"
+    args = ["-d"]
+
+[edit]
+    command = "nvim"
+
+[cd]
+    command = "zsh"

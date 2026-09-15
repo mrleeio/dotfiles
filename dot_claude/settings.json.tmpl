@@ -1,0 +1,4 @@
+{{- $settings := include ".chezmoitemplates/claude-settings/common.json" | fromJson -}}
+{{- $machine := index .machines .machine_name -}}
+{{- $_ := set $settings "attribution" (dict "commit" (printf "Authored-By: %s <%s>" $machine.name $machine.email) "pr" "") -}}
+{{ $settings | toPrettyJson }}

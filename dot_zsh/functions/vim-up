@@ -1,0 +1,35 @@
+# Explicit dependency setup; never invoked during shell or editor startup.
+emulate -L zsh
+
+local tool source_dir
+for tool in chezmoi python3 git nvim; do
+  if ! (( $+commands[$tool] )); then
+    print -u2 -- "vim-up: missing $tool; install the Brewfile dependencies first."
+    return 1
+  fi
+done
+source_dir=$(chezmoi source-path) || return
+
+python3 - "$source_dir/dependencies.json" <<'PYTHON'
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+for dependency in json.loads(Path(sys.argv[1]).read_text()):
+    destination = Path(dependency["directory"]).expanduser()
+    if destination.exists():
+        print(f"Keeping existing checkout: {destination}")
+        continue
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "clone", "--no-checkout",
+                    dependency["repository"], str(destination)], check=True)
+    subprocess.run(["git", "-C", str(destination), "checkout", "--detach",
+                    dependency["revision"]], check=True)
+PYTHON
+local result=$?
+(( result == 0 )) || return $result
+
+nvim --headless \
+  -c "lua local ok, result = pcall(function() return require('nvim-treesitter').install(require('treesitter_languages')):wait(300000) end); if not ok or result == false then print('Parser installation failed: ' .. tostring(result)); vim.cmd('cquit 1') end" \
+  -c 'qa'

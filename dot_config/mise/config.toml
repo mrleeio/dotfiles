@@ -1,0 +1,5 @@
+[settings]
+node.compile = false
+# Python and Ruby use precompiled binaries when available, with source fallback.
+pin = true
+lockfile = true

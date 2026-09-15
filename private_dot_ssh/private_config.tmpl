@@ -1,0 +1,15 @@
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host github.com
+  User git
+  # Public key selects the matching private key held in 1Password.
+  IdentityFile ~/.ssh/github.pub
+  IdentitiesOnly yes
+{{ if eq .machine_name "work" }}
+Host ssh.dev.azure.com
+  User git
+  # Let the agent offer the work key without requiring a local private key.
+  IdentitiesOnly no
+  LogLevel ERROR
+{{ end }}

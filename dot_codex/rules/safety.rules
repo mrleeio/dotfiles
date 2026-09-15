@@ -1,0 +1,83 @@
+# Supplemental command checks, not a substitute for the OS sandbox.
+# Prefixes match literal arguments, not glob patterns or arbitrary script behavior.
+# Keep this separate from default.rules, which Codex writes for user approvals.
+
+prefix_rule(
+    pattern = [["sudo", "/usr/bin/sudo", "doas", "su", "/usr/bin/su"]],
+    decision = "forbidden",
+    justification = "Run privileged administration yourself outside the agent session.",
+    match = ["sudo true", "su root", "doas id"],
+    not_match = ["git status"],
+)
+
+prefix_rule(
+    pattern = [["dd", "/bin/dd", "shutdown", "/sbin/shutdown", "reboot", "/sbin/reboot"]],
+    decision = "forbidden",
+    justification = "Disk copying and system power operations require manual administration.",
+    match = ["dd if=/dev/zero of=/dev/disk9", "reboot"],
+    not_match = ["diskutil list"],
+)
+
+prefix_rule(
+    pattern = [["diskutil", "/usr/sbin/diskutil"], ["eraseDisk", "eraseVolume", "partitionDisk"]],
+    decision = "forbidden",
+    justification = "Disk destruction must be performed manually.",
+    match = ["diskutil eraseDisk APFS scratch /dev/disk9"],
+    not_match = ["diskutil info /"],
+)
+
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "forbidden",
+    justification = "Preserve uncommitted work; use a new worktree or inspect a targeted change.",
+    match = ["git reset --hard HEAD"],
+    not_match = ["git reset --soft HEAD~1"],
+)
+
+prefix_rule(
+    pattern = ["git", "clean", ["-f", "-fd", "-df", "-fx", "-xf", "-fdx", "-dfx", "-dxf", "-fxd", "-xdf", "-xfd", "-ff", "-ffd", "-ffdx", "--force"]],
+    decision = "forbidden",
+    justification = "Inspect untracked files and remove only the intended files explicitly.",
+    match = ["git clean -fd", "git clean -dfx", "git clean --force"],
+    not_match = ["git clean -nd"],
+)
+
+prefix_rule(
+    pattern = ["git", "push", ["-f", "--force", "--force-with-lease", "--mirror", "--delete", "-d"]],
+    decision = "forbidden",
+    justification = "Remote history rewriting and deletion must be performed manually.",
+    match = ["git push --force origin main", "git push --delete origin main"],
+    not_match = ["git push origin feature"],
+)
+
+# This repository's global Git configuration defines pf = push --force-with-lease.
+prefix_rule(
+    pattern = ["git", "pf"],
+    decision = "forbidden",
+    justification = "The pf alias force-pushes; run it manually when necessary.",
+    match = ["git pf origin main"],
+)
+
+prefix_rule(
+    pattern = ["gh", "repo", "delete"],
+    decision = "forbidden",
+    justification = "Repository deletion must be performed manually.",
+    match = ["gh repo delete owner/repo --yes"],
+    not_match = ["gh repo view owner/repo"],
+)
+
+prefix_rule(
+    pattern = ["gh", "auth", "token"],
+    decision = "forbidden",
+    justification = "Do not expose authentication tokens to command output.",
+    match = ["gh auth token"],
+    not_match = ["gh auth status"],
+)
+
+prefix_rule(
+    pattern = [["rm", "/bin/rm"], ["-rf", "-fr"], ["/", "~", "$HOME"]],
+    decision = "forbidden",
+    justification = "Never recursively remove the filesystem root or home directory.",
+    match = ["rm -rf /"],
+    not_match = ["rm -rf build"],
+)

@@ -1,0 +1,2 @@
+-- Configuration only: packages are provisioned separately (docs/dependencies.md).
+-- Plugin files load installed packages and skip missing optional dependencies.

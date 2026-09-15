@@ -1,0 +1,57 @@
+[
+  {
+    "repository": "https://github.com/zdharma-continuum/fast-syntax-highlighting.git",
+    "revision": "4672ad5dd9ad68a7effc1476d65afb7c584ce2b3",
+    "directory": "~/.local/share/zsh/plugins/fast-syntax-highlighting"
+  },
+  {
+    "repository": "https://github.com/zsh-users/zsh-autosuggestions.git",
+    "revision": "85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5",
+    "directory": "~/.local/share/zsh/plugins/zsh-autosuggestions"
+  },
+  {
+    "repository": "https://github.com/zsh-users/zsh-completions.git",
+    "revision": "de02bb84ab0af51e328c6ae85ab5555397c31277",
+    "directory": "~/.local/share/zsh/plugins/zsh-completions"
+  },
+  {
+    "repository": "https://github.com/ohmyzsh/ohmyzsh.git",
+    "revision": "fcf965912c4adf73ead540e7409bb42ec6e31b45",
+    "directory": "~/.local/share/zsh/plugins/ohmyzsh"
+  },
+  {
+    "repository": "https://github.com/echasnovski/mini.nvim.git",
+    "revision": "ac5dffcc52b8378fbb15efeb0497a83e57a0b01c",
+    "directory": "~/.local/share/nvim/site/pack/deps/start/mini.nvim"
+  },
+  {
+    "repository": "https://github.com/catppuccin/nvim.git",
+    "revision": "edefef779ab08ce1a4a404713e3012b0d202bd35",
+    "directory": "~/.local/share/nvim/site/pack/deps/opt/catppuccin"
+  },
+  {
+    "repository": "https://github.com/nvim-treesitter/nvim-treesitter.git",
+    "revision": "9a168f6357ed21c3a636e1727bc7d382abc451b8",
+    "directory": "~/.local/share/nvim/site/pack/deps/opt/nvim-treesitter"
+  },
+  {
+    "repository": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git",
+    "revision": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187",
+    "directory": "~/.local/share/nvim/site/pack/deps/opt/nvim-treesitter-textobjects"
+  },
+  {
+    "repository": "https://github.com/neovim/nvim-lspconfig.git",
+    "revision": "ac9d2f7c4757db6320cab6697fe73e5e8adb2457",
+    "directory": "~/.local/share/nvim/site/pack/deps/opt/nvim-lspconfig"
+  },
+  {
+    "repository": "https://github.com/stevearc/conform.nvim.git",
+    "revision": "016802de402556da54c36bd7359b441266b01cdd",
+    "directory": "~/.local/share/nvim/site/pack/deps/opt/conform.nvim"
+  },
+  {
+    "repository": "https://github.com/rafamadriz/friendly-snippets.git",
+    "revision": "b4d01b0fdf3c9a549961c2f9ffe8dc09be166219",
+    "directory": "~/.local/share/nvim/site/pack/deps/opt/friendly-snippets"
+  }
+]
