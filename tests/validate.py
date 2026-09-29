@@ -103,6 +103,13 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-test-') as scratch:
             signing_key = run(['git', 'config', '--file', str(destination / '.gitconfig'),
                                '--get', 'user.signingkey']).strip()
             assert public_key == signing_key
+            agent = tomllib.loads((destination / '.config/1Password/ssh/agent.toml').read_text())
+            items = [key['item'] for key in agent['ssh-keys']]
+            if profile == 'work':
+                assert items == ['Gen 2 Fund SSH Key', 'Michael Lee SSH Key']
+            else:
+                assert items == ['Michael Lee SSH Key', 'Crafted Compliance SSH Key',
+                                 'Gen 2 Fund SSH Key']
             if profile == 'work':
                 assert signing_key.startswith('ssh-rsa ')
                 azure_config = run(['ssh', '-G', '-F', str(destination / '.ssh/config'),

@@ -6,9 +6,8 @@ SSH uses the 1Password agent through its macOS socket at
 `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`.
 Enable the SSH agent in 1Password's Developer settings and unlock the app.
 
-Chezmoi manages `~/.config/1Password/ssh/agent.toml` to offer, in order,
-`Michael Lee SSH Key` and `Crafted Compliance SSH Key` from the `Development`
-vault, then `Gen 2 Fund SSH Key` from the `Gen 2 Fund Services` vault.
+Chezmoi manages `~/.config/1Password/ssh/agent.toml`, which lists the 1Password
+SSH key items each profile uses, in the order the agent offers them.
 This explicit list replaces 1Password's default vault selection. Keep these
 item titles synchronized with 1Password if you rename any key. After first
 creating the file, lock and unlock 1Password if the keys do not appear.
