@@ -6,11 +6,11 @@ SSH uses the 1Password agent through its macOS socket at
 `~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock`.
 Enable the SSH agent in 1Password's Developer settings and unlock the app.
 
-Chezmoi manages `~/.config/1Password/ssh/agent.toml` to offer the
-`Michael Lee SSH Key` item first, followed by `Crafted Compliance SSH Key`,
-both from the `Development` vault.
+Chezmoi manages `~/.config/1Password/ssh/agent.toml` to offer, in order,
+`Michael Lee SSH Key` and `Crafted Compliance SSH Key` from the `Development`
+vault, then `Gen 2 Fund SSH Key` from the `Gen 2 Fund Services` vault.
 This explicit list replaces 1Password's default vault selection. Keep these
-item titles synchronized with 1Password if you rename either key. After first
+item titles synchronized with 1Password if you rename any key. After first
 creating the file, lock and unlock 1Password if the keys do not appear.
 
 For GitHub, chezmoi writes the profile's public signing key to `~/.ssh/github.pub`.
@@ -19,8 +19,9 @@ matching key in 1Password, and `IdentitiesOnly yes` prevents unrelated agent key
 from being offered. No local private-key file is required. Register the public
 key as an **Authentication Key** in GitHub as well as a **Signing Key**.
 
-The work profile lets the agent offer its available keys to Azure DevOps. Keep
-the appropriate work key available in 1Password and registered with that service.
+On the work profile that key is `Gen 2 Fund SSH Key` (RSA), and it is also used
+for Azure DevOps (`ssh.dev.azure.com`), selected through `~/.ssh/github.pub`
+with `IdentitiesOnly yes`. Register that public key in Azure DevOps as an SSH key.
 
 Verify GitHub access without SSH command overrides:
 
@@ -36,8 +37,10 @@ See [1Password's SSH configuration guide](https://www.1password.dev/ssh/agent/ad
 
 ## Commit signing
 
-All profiles use the current SSH signing key held in 1Password. The repository
-stores only its public key in `.chezmoidata/machines.yaml`. Git invokes
+Each profile's `signingkey` in `.chezmoidata/machines.yaml` selects its SSH
+signing key held in 1Password. The personal and homelab profiles use
+`Michael Lee SSH Key`; the work profile signs as `mlee@gen2fund.com` with
+`Gen 2 Fund SSH Key`. The repository stores only public keys. Git invokes
 `/Applications/1Password.app/Contents/MacOS/op-ssh-sign`; private signing material
 is not exported to this repository.
 

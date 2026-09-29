@@ -104,9 +104,12 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-test-') as scratch:
                                '--get', 'user.signingkey']).strip()
             assert public_key == signing_key
             if profile == 'work':
+                assert signing_key.startswith('ssh-rsa ')
                 azure_config = run(['ssh', '-G', '-F', str(destination / '.ssh/config'),
                                     'ssh.dev.azure.com'])
-                assert 'identitiesonly no' in azure_config
+                assert 'com.1password/t/agent.sock' in azure_config
+                assert 'identityfile ~/.ssh/github.pub' in azure_config
+                assert 'identitiesonly yes' in azure_config
                 assert 'identityfile ~/.ssh/id_rsa_work' not in azure_config
             assert not (destination / 'Library/LaunchAgents/com.atuin.server.plist').exists()
             assert not (destination / 'tests').exists()
