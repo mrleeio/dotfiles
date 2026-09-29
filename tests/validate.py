@@ -59,8 +59,6 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-test-') as scratch:
                 '.config/ghostty/config.local': 'font-size = 17\n',
                 '.config/gh/hosts.yml': 'test-auth-state\n',
                 '.ssh/id_ed25519_personal': 'test-key-state\n',
-                '.codex/auth.json': '{"test": "auth-state"}\n',
-                '.codex/rules/default.rules': '# User-owned approvals\n',
                 'Library/Application Support/Code/User/settings.json': '{"editor.tabSize": 8}\n',
             }
             for name, content in local_files.items():
@@ -114,63 +112,9 @@ with tempfile.TemporaryDirectory(prefix='dotfiles-test-') as scratch:
             assert not (destination / 'tests').exists()
             assert not (destination / 'Brewfile').exists()
             assert not (destination / 'dependencies.json').exists()
-            settings = json.loads((destination / '.claude/settings.json').read_text())
-            email = 'mlee@gen2fund.com' if profile == 'work' else 'michael@mrlee.io'
-            assert settings['attribution']['commit'] == f'Authored-By: Michael Lee <{email}>'
-            assert settings['sandbox']['excludedCommands'] == []
-            assert settings['sandbox']['network']['allowAllUnixSockets'] is False
-            # Both agents must receive the exact shared instructions, not an import
-            # or a symlink that relies on the other application being installed.
-            instructions = (source / '.chezmoitemplates/agent-instructions.md').read_bytes()
-            assert (destination / '.claude/CLAUDE.md').read_bytes() == instructions
-            assert (destination / '.codex/AGENTS.md').read_bytes() == instructions
-            codex = tomllib.loads((destination / '.codex/config.toml').read_text())
-            assert 'sandbox_mode' not in codex and 'sandbox_workspace_write' not in codex
-            policy = codex['permissions'][codex['default_permissions']]
-            assert policy['extends'] == ':workspace'
-            assert codex['features']['network_proxy'] is True
-            assert policy['network']['enabled'] is True
-            assert set(policy['network']['domains']) == set(settings['sandbox']['network']['allowedDomains'])
-            for path in settings['sandbox']['filesystem']['denyRead']:
-                assert policy['filesystem'][path] == 'deny'
-            assert policy['filesystem']['~/.codex/auth.json'] == 'deny'
-            assert policy['filesystem']['~/.codex'] == 'read'
-            for path, read_rule in (
-                ('~/.aws', 'Read(~/.aws/**)'),
-                ('~/.config/gh', 'Read(~/.config/gh/hosts.yml)'),
-                ('~/Library/Keychains', 'Read(~/Library/Keychains/**)'),
-            ):
-                assert policy['filesystem'][path] == 'read'
-                assert path in settings['sandbox']['filesystem']['denyWrite']
-                assert path not in settings['sandbox']['filesystem']['denyRead']
-                assert read_rule not in settings['permissions']['deny']
-            assert '~/.config/gh/hosts.yml' not in settings['sandbox']['filesystem']['denyRead']
-            assert policy['filesystem'].get('~/.config/gh/hosts.yml', 'read') == 'read'
-            auth_variables = {'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'AWS_SESSION_TOKEN',
-                              'GH_TOKEN', 'GITHUB_TOKEN', 'GH_ENTERPRISE_TOKEN', 'GITHUB_ENTERPRISE_TOKEN'}
-            denied_variables = {entry['name'] for entry in settings['sandbox']['credentials']['envVars']}
-            assert auth_variables.isdisjoint(denied_variables)
-            shell_policy = codex['shell_environment_policy']
-            assert shell_policy['inherit'] == 'all'
-            assert shell_policy['ignore_default_excludes'] is True
-            assert auth_variables.isdisjoint(shell_policy['filters'])
-            assert shell_policy['filters']['OPENAI_API_KEY'] == 'exclude'
-            assert shell_policy['set']['AWS_EC2_METADATA_DISABLED'] == 'true'
-            assert settings['env']['AWS_EC2_METADATA_DISABLED'] == 'true'
-            for host in ('*.amazonaws.com', '*.aws.amazon.com', '*.awsapps.com'):
-                assert policy['network']['domains'][host] == 'allow'
-            assert policy['network']['allow_local_binding'] is False
-            assert codex['approvals_reviewer'] == 'auto_review'
-            for category in ('sandbox_approval', 'request_permissions', 'rules'):
-                assert codex['approval_policy']['granular'][category] is True
-            assert codex['approval_policy']['granular']['skill_approval'] is False
-            workspace_policy = policy['filesystem'][':workspace_roots']
-            assert workspace_policy['.git'] == 'write'
-            assert workspace_policy['.git/config'] == 'read'
-            assert workspace_policy['.git/hooks'] == 'read'
             # Applying again must produce no file drift.
             assert not run(base + ['diff']).strip()
-            print(f'PASS {profile}/{arch}: render, syntax, policy, permissions, idempotence')
+            print(f'PASS {profile}/{arch}: render, syntax, idempotence')
 
     invalid = subprocess.run(base + ['--override-data', '{"machine_name":"invalid"}',
                                     'execute-template', '--init', '--file',

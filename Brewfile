@@ -26,9 +26,6 @@ brew "wget"                          # https://www.gnu.org/software/wget/
 brew "zoxide"                        # https://github.com/ajeetdsouza/zoxide
 brew "zsh"                           # https://www.zsh.org/
 cask "1password"                     # https://1password.com/
-cask "claude-code@latest"            # Claude Code CLI, installed through Homebrew
-cask "claude"                        # https://claude.ai/download (desktop app)
-cask "codex"                         # Codex CLI, installed through Homebrew
 cask "font-jetbrains-mono-nerd-font" # https://github.com/ryanoasis/nerd-fonts
 cask "ghostty"                       # https://ghostty.org/
 cask "monitorcontrol"                # https://github.com/MonitorControl/MonitorControl

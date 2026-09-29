@@ -10,7 +10,6 @@ Machine-agnostic dotfiles managed with [chezmoi](https://www.chezmoi.io/), suppo
 | Editor | [Neovim](https://neovim.io/) configuration (mini.nvim + LSP) |
 | Terminal | [ghostty](https://ghostty.org/) with Catppuccin theme |
 | Git | Profile-specific identity, SSH authentication, and commit signing through 1Password |
-| AI | Claude Code and Codex with shared instructions, sandbox policies, and Conventional Commits |
 | Versions | [mise](https://mise.jdx.dev/) for runtime management |
 | History | Local-only Atuin history; automatic sync and update checks disabled |
 
@@ -90,15 +89,10 @@ To install newly added Brewfile entries, run
 
 ## Machine profiles
 
-All profiles share the same Claude sandbox policy. Git identity and Claude
-attribution come from `.chezmoidata/machines.yaml`; the work profile also sets
+Git identity comes from `.chezmoidata/machines.yaml`; the work profile also sets
 its corporate CA path and SSH host mappings.
 
 All profiles keep Atuin history local, with sync and update checks disabled.
-
-See [Claude Code policy](docs/claude.md) and [Codex policy](docs/codex.md) for
-sandbox boundaries, credential restrictions, and verification. Both agents use
-`.chezmoitemplates/agent-instructions.md` as their global instruction source.
 
 Profile data is in `.chezmoidata/machines.yaml`. To change your machine name after init:
 
@@ -160,8 +154,6 @@ automatic sync and update checks disabled.
 .chezmoidata/          Machine profile data
 .chezmoitemplates/     Shared configuration templates
 dot_config/            ~/.config/ (nvim, atuin, ghostty, starship, mise)
-dot_claude/            Claude Code settings
-dot_codex/             Codex settings, instructions, and command rules
 private_dot_ssh/       SSH host config and public signing information
 Brewfile              Optional software inventory (not deployed)
 dependencies.json     Plugin revisions and install paths (not deployed)
