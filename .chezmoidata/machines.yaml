@@ -1,0 +1,9 @@
+machines:
+  personal:
+    name: "Michael Lee"
+    email: "michael@mrlee.io"
+    signingkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO20/p1qXLmSJW45WGkV0dN+uvnHm1Vi2IoRUwEFC6ah"
+  work:
+    name: "Michael Lee"
+    email: "mlee@gen2fund.com"
+    signingkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCkUJusa8ktQHoQ9bDjAt2U+i6dF1MCEoqlHFHzuvRx2ZbRSxnoEXHOyVgeMJjYU6nbnTP3btIOChXQt/ulkJ1Kq63ib+NCMMnm9PdeyrVMTqqpj9WsYM3Kjz3NF5kjFOckWyyEGIXTirfT5HP7h0UIKqIrAmI97zWUb9dhmLhGodeT6lfNS3x5mPHR9riHcgNfY8zQDwuXhYSAxBKl5kUfm8WdxI5yMDp7So5HPeEIBtoJk4487elT9bADfJlHdDGC8L9G1grycbAMyiB+PuHdN1pBgJWHDjdgcyN4gceoX1Xu+2U5Cv9xnHYogMp62cettT8zaxURnSM0+xPtiBOre/RjomD2H6pvxW+EMAO3TMn4s6TWIO8kjU6ArDvFkWjgxeXnhXu8sMO2s/Ul8WeiK5Zg86sJR+eSBPGTEu4dYRGyEDj3sgXaqIDf9GMBaZEA5UnYE+ppNSAhAz5tV7hGjUcN0c1nSvVeF/HEGSGiuH5OsucbwuREaoWmxSuTI64lokTQmZzuz9iblFrTAngBou4Xnxk5sM3lLoiNUmN1qNGQ2He4CBK6Zd/jV/B4GtAycerb8vHB3nKpV576iXY5F9apHds8icwFKzpcnZ71Xcw303bJVFmQu9ZYqdD8RMZhCXq+m3y80GPAuiegO+L7cmfuwxn38Mx5TUGG5gdt5Q=="

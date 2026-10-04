@@ -1,0 +1,12 @@
+README.md
+LICENSE
+docs/
+
+
+.github/
+tests/
+
+Brewfile
+dependencies.json
+.gitconfig.local
+.config/ghostty/config.local

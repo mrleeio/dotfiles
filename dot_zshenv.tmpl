@@ -1,0 +1,24 @@
+# Homebrew (must be first so everything else is on PATH)
+if [[ -x "{{ template "brew-prefix" . }}/bin/brew" ]]; then
+  eval "$("{{ template "brew-prefix" . }}/bin/brew" shellenv)"
+fi
+
+# XDG Base Directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Editor
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# Homebrew
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+{{ template "path-precedence" . }}
+
+{{ if eq .machine_name "work" -}}
+# Zscaler TLS inspection — trust corporate root CA
+export NODE_EXTRA_CA_CERTS="${HOME}/.ssl/zscaler_root_ca.pem"
+{{ end -}}

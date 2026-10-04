@@ -1,0 +1,7 @@
+# macOS /etc/zprofile runs path_helper after .zshenv and moves system directories
+# ahead of Homebrew and mise; restore their precedence for login shells.
+{{ template "path-precedence" . }}
+# Add ~/.local/bin to PATH (login shells only)
+if [[ -d "$HOME/.local/bin" ]]; then
+  path=("$HOME/.local/bin" $path)
+fi

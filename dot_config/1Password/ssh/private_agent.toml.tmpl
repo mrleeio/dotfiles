@@ -1,0 +1,19 @@
+# Offer only these SSH key items, in this order.
+# Private keys remain in 1Password; these values are item titles.
+{{- if eq .machine_name "work" }}
+[[ssh-keys]]
+item = "Gen 2 Fund SSH Key"
+vault = "Gen 2 Fund Services"
+
+[[ssh-keys]]
+item = "Michael Lee SSH Key"
+vault = "Development"
+{{- else }}
+[[ssh-keys]]
+item = "Michael Lee SSH Key"
+vault = "Development"
+
+[[ssh-keys]]
+item = "Gen 2 Fund SSH Key"
+vault = "Gen 2 Fund Services"
+{{- end }}

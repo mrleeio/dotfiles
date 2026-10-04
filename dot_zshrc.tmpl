@@ -1,0 +1,67 @@
+# Plugins are installed separately; startup only loads existing files.
+ZSH_PLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+if [[ -d "$ZSH_PLUGIN_DIR/zsh-completions/src" ]]; then
+  fpath=("$ZSH_PLUGIN_DIR/zsh-completions/src" $fpath)
+fi
+# Rebuild and security-check completions at most daily; otherwise reuse the dump.
+# brew-up and vim-up delete the dump so new completions appear immediately.
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
+mkdir -p "${_zcompdump:h}"
+_zcompdump_stale=($_zcompdump(N.mh+24))
+if [[ ! -s $_zcompdump ]] || (( $#_zcompdump_stale )); then
+  compinit -d "$_zcompdump"
+else
+  compinit -C -d "$_zcompdump"
+fi
+[[ $_zcompdump.zwc -nt $_zcompdump ]] || zcompile "$_zcompdump"
+unset _zcompdump _zcompdump_stale
+
+for plugin in \
+  "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+  "$ZSH_PLUGIN_DIR/ohmyzsh/plugins/gh/gh.plugin.zsh" \
+  "$ZSH_PLUGIN_DIR/ohmyzsh/plugins/brew/brew.plugin.zsh"; do
+  [[ -r "$plugin" ]] && source "$plugin"
+done
+unset plugin
+
+(( $+commands[atuin] )) && eval "$(atuin init zsh)"
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
+
+# === History ===
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=32768
+SAVEHIST=$HISTSIZE
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+
+# === Custom Functions ===
+fpath=("${ZDOTDIR:-$HOME}/.zsh/functions" $fpath)
+autoload -Uz ${fpath[1]}/*(.:t)
+
+# === Options ===
+setopt AUTO_CD
+setopt AUTO_PUSHD PUSHD_IGNORE_DUPS PUSHD_SILENT
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
+
+# === Navigation ===
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'
+
+# Syntax highlighting loads after widgets and keybindings.
+if [[ -r "$ZSH_PLUGIN_DIR/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]]; then
+  source "$ZSH_PLUGIN_DIR/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+fi
+
+# Initialize the prompt after shell integrations and widgets.
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+else
+  print -u2 -- 'Starship is not installed or not on PATH. Run: brew install starship; exec zsh -l'
+fi

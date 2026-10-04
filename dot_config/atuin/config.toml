@@ -1,0 +1,12 @@
+# Local history only on every profile.
+auto_sync = false
+update_check = false
+# Prevent manual sync/login from falling back to the public service.
+sync_address = "http://127.0.0.1:1"
+
+# Ctrl-R searches the current git repository, or the current directory outside
+# one. Up-arrow searches only the current directory.
+filter_mode_shell_up_key_binding = "directory"
+
+[search]
+filters = ["workspace", "directory"]

@@ -1,0 +1,17 @@
+# Stop every process listening on a TCP port (IPv4 and IPv6).
+#
+# clear-port 3000
+emulate -L zsh
+
+if (( $# != 1 )); then
+  print -u2 -- 'Usage: clear-port port-number'
+  return 1
+fi
+
+# A port can be held by several processes, such as a server and its workers.
+local -a pids=(${(f)"$(lsof -t -iTCP:"$1" -sTCP:LISTEN)"})
+if (( ! $#pids )); then
+  print -u2 -- "clear-port: nothing is listening on port $1"
+  return 1
+fi
+kill $pids
